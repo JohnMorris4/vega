@@ -1,9 +1,12 @@
+import * as Raven from 'raven-js';
+
 import {BrowserModule} from '@angular/platform-browser';
 import {ErrorHandler, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {HttpModule} from "@angular/http";
+
 
 import {AppComponent} from './app.component';
 import {NavMenuComponent} from './components/nav-menu/nav-menu';
@@ -15,6 +18,14 @@ import {VehicleFormComponent} from './components/vehicle-form/vehicle-form';
 import {VehicleService} from "./services/vehicle.service";
 import {ToastyModule} from "ng2-toasty";
 import {AppErrorHandler} from "./app.error-handler";
+import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
+import {PaginationComponent} from "./components/shared/pagination.component";
+
+
+Raven
+  .config('https://d4eb58f2a8e0467695a066faa6cc2779@sentry.io/1245276')
+  .install();
+
 
 
 @NgModule({
@@ -25,6 +36,8 @@ import {AppErrorHandler} from "./app.error-handler";
     CounterComponent,
     FetchDataComponent,
     VehicleFormComponent,
+    VehicleListComponent,
+    PaginationComponent
 
   ],
   imports: [
@@ -34,9 +47,10 @@ import {AppErrorHandler} from "./app.error-handler";
     FormsModule,
     ToastyModule.forRoot(),
     RouterModule.forRoot([
-      // { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: VehicleFormComponent },
+      { path: 'vehicles', component: VehicleListComponent },
       { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
